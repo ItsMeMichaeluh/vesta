@@ -34,7 +34,7 @@ def get_current_time():
 
     day_short = now.strftime("%a").upper()
 
-    # Datum in formaat "DD MON", bijv. "11 DEC"
+     # Datum in formaat "DD MON", bijv. "11 DEC"
 
     date_part = now.strftime("%d %b").upper()
 
@@ -72,23 +72,23 @@ def text_to_matrix(text, row_length=22):
 
         ":": 50,  # Dubbele punt
 
-        **{chr(i): i - 64 for i in range(65, 91)},  # Letters A-Z
+        **{chr(i): i - 64 for i in range(65, 91)},  # letters beginnen bij 65. dit zet 1 gelijk aan a
 
-        **{str(i): i + 26 for i in range(1, 10)},  # Cijfers 1-9
+        **{str(i): i + 26 for i in range(1, 10)},  # zelfde maar dan met de cijfers
 
-        "0": 36  # Correcte mapping voor "0"
+        "0": 36  # 0 word gezet op de 36
 
     }
 
-    # Zet elk teken van de tekst om in de overeenkomstige matrixcode
+    # hier word de code gehaald uit de mapping dictonary en alles in hoofdletters gezet. geen waarde = 0
 
     row = [mapping.get(char, 0) for char in text.upper()]
 
-    # Bereken hoeveel padding nodig is om de tekst te centreren
+    # hier word berekend hoeveel ruimte er nog over is na de text
 
     padding = (row_length - len(row)) // 2
 
-    # Voeg padding aan beide zijden toe en retourneer de resulterende rij
+    # Voeg padding aan beide zijden toe toegevoegd
 
     return [0] * padding + row + [0] * (row_length - len(row) - padding)
  

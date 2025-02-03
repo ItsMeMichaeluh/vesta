@@ -8,21 +8,21 @@ import pytz
 
 import time
  
-# API-sleutel
+
 
 API_KEY = "NTIwMDBkNjctOTQ0My00NjJkLTg4NjItZWQyMmM3ZmNjODkw"
  
-# Endpoint
+
   
 message_url = "http://192.168.42.2:7000/local-api/message"
  
-# Functie om de huidige tijd op te halen
+
 
 def get_current_time():
 
     timezone = pytz.timezone("Europe/Amsterdam")  # GMT+1 tijdzone
 
-    now = datetime.now(timezone)
+    now = datetime.now(timezone) # haalt tijd zone op
 
     day_short = now.strftime("%a").upper()  # Verkorte dagnaam, bijv. "MON", "TUE"
 
@@ -56,9 +56,15 @@ def text_to_matrix(text, row_length=22):
 
     }
 
-    row = [mapping.get(char, 0) for char in text.upper()]
+    #hier word de code gehaald uit de mapping dictonary en alles in hoofdletters gezet. geen waarde = 00
 
-    padding = (row_length - len(row)) // 2  # Bereken padding voor centreren
+    row = [mapping.get(char, 0) for char in text.upper()] 
+
+    # hier word berekend hoeveel ruimte er nog over is na de text
+
+    padding = (row_length - len(row)) // 2 
+    
+    # Voeg padding aan beide zijden toe toegevoegd
 
     return [0] * padding + row + [0] * (row_length - len(row) - padding)
  
@@ -78,7 +84,7 @@ def calculate_progress_bar():
 
     elapsed_seconds = (now - start_of_day).total_seconds()
 
-    progress = int((elapsed_seconds / total_seconds) * 22)  # Maximaal 22 kolommen
+    progress = int((elapsed_seconds / total_seconds) * 22)   
 
     return [67] * progress + [69] * (22 - progress)  # Blauwe en witte progressiebalk
  
@@ -101,7 +107,7 @@ def send_vestaboard_message():
         progress_bar,               # Blauwe bovenrand (loading bar)
 
         [0] * 22,                   # Lege regel
-
+ 
         text_to_matrix(date_str),   # Dynamische datum (verkorte dagnaam)
 
         text_to_matrix(time_str),   # Dynamische tijd
